@@ -1,10 +1,10 @@
 # Robot2019_CommandBase
 FRC 2019 Command-Based Robot Deep Space
 1. SubSystems
-..* MecanumDriveSystem
-..* GamePieceManipulator
-..* HABClimber
-..* Utility (Signal Light)
+  * MecanumDriveSystem
+  * GamePieceManipulator
+  * HABClimber
+  * Utility (Signal Light)
 
 2. Commands
 ..* CargoBallEject

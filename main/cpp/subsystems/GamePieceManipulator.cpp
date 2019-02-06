@@ -25,11 +25,46 @@ void GamePieceManipulator::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+/*******************************
+ * Pneumatic Hatch Panel Methods
+********************************/
 
-void GamePieceManipulator::Eject() {
+void GamePieceManipulator::HatchEject() {
     hatchPanel->Set(frc::DoubleSolenoid::Value::kForward);
   }
 
-void GamePieceManipulator::Inject() {
+void GamePieceManipulator::HatchInject() {
     hatchPanel->Set(frc::DoubleSolenoid::Value::kReverse);
   }
+
+/*******************************
+    Arm Raise & Lower Methods
+********************************/
+
+void GamePieceManipulator::Move(double v) {
+//    hingeMotor->Set(ctre::phoenix::WPI_TalonSRX::Value::kForward);
+    hingeMotor->Move(v);
+}
+void GamePieceManipulator::Raise(double v) {
+//    hingeMotor->Set(ctre::phoenix::WPI_TalonSRX::Value::kForward);
+    hingeMotor->Set(-v);
+}
+void GamePieceManipulator::Lower(double v) {
+    hingeMotor->Set(v);  
+}
+void GamePieceManipulator::Stop() {
+    hingeMotor->Set(0.0);
+}
+
+/*******************************
+    Cargo Ball Methods
+********************************/
+void CargoLoad() {
+
+}
+void CargoEject() {
+  
+}
+void CargoStop() {
+  
+}

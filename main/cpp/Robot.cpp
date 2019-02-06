@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
+#include "CommandBase.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -13,10 +14,12 @@ ExampleSubsystem Robot::m_subsystem;
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
+  // Instantiate all subsystems objects 
+  CommandBase::init();
+  
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-
 }
 
 /**

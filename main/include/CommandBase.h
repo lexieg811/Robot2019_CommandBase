@@ -6,6 +6,8 @@
 #include <frc/WPILib.h>
 #include "OI.h"
 #include "subsystems/GamePieceManipulator.h"
+#include "subsystems/HABClimber.h"
+#include "subsystems/Utility.h"
 
 
 /**
@@ -20,8 +22,9 @@ public:
 	CommandBase();
 	static void init();
 	// Create a single static instance of all of your subsystems
-	// static Climber *climber;
     static GamePieceManipulator *gamePieceManipulator;
+	static HABClimber *habClimber;
+	static Utility *utility; 
 	// static OI *oi;
 };
 #endif

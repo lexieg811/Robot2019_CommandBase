@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class HABForward : public frc::Command {
+class HABForward : public CommandBase {
  public:
   HABForward();
   void Initialize() override;

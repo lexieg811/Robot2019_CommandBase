@@ -16,10 +16,10 @@
 #include "commands/ExampleCommand.h"
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
-#include "commands/CargoBallEject.h"
-#include "commands/CargoBallIntake.h"
-#include "subsystems/GamePieceManipulator.h"
 
+#include "subsystems/GamePieceManipulator.h"
+#include "subsystems/HABClimber.h"
+#include "subsystems/Utility.h"
 
 class Robot : public frc::TimedRobot {
  public:

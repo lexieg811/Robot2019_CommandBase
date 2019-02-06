@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class MecanumDriveCommand : public frc::Command {
+class MecanumDriveCommand : public CommandBase {
  public:
   MecanumDriveCommand();
   void Initialize() override;

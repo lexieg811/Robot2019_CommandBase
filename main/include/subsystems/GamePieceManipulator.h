@@ -28,6 +28,12 @@ class GamePieceManipulator : public frc::Subsystem {
  public:
   GamePieceManipulator();
   void InitDefaultCommand() override;
-  void Eject();
-  void Inject();
+  void HatchEject();
+  void HatchInject();
+  void Raise();
+  void Lower();
+  void Stop();
+  void CargoLoad();
+  void CargoEject();
+  void CargoStop();
 };

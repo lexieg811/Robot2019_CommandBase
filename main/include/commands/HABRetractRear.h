@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class HABRetractRear : public frc::Command {
+class HABRetractRear : public CommandBase {
  public:
   HABRetractRear();
   void Initialize() override;

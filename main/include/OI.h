@@ -17,7 +17,7 @@ class OI {
   frc::JoystickButton *btnEjectHatchPanel;
   frc::JoystickButton *btnIntakeCargoBall;
   frc::JoystickButton *btnEjectCargoBall;
-  frc::JoystickButton *bntRaiseGamePieceManipulator;
+  frc::JoystickButton *btnRaiseGamePieceManipulator;
   frc::JoystickButton *btnLowerGamePieceManipulator;
   frc::JoystickButton *btnHABLift;
   frc::JoystickButton *btnHABRetractFront;

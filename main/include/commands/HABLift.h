@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class HABLift : public frc::Command {
+class HABLift : public CommandBase {
  public:
   HABLift();
   void Initialize() override;

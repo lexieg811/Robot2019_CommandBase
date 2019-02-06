@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class GamePieceManipulatorMoveToPosition : public frc::Command {
+class GamePieceManipulatorMoveToPosition : public CommandBase {
  public:
   GamePieceManipulatorMoveToPosition();
   void Initialize() override;

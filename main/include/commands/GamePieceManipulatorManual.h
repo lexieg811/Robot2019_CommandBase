@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class GamePieceManipulatorManual : public frc::Command {
+class GamePieceManipulatorManual : public CommandBase {
  public:
   GamePieceManipulatorManual(double);
   void Initialize() override;
@@ -17,4 +18,6 @@ class GamePieceManipulatorManual : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  double velocity; // Speed (and direction) to move
 };

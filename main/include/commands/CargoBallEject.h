@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class CargoBallEject : public frc::Command {
+class CargoBallEject : public CommandBase {
  public:
   CargoBallEject();
   void Initialize() override;

@@ -18,7 +18,7 @@ void HatchPanelEject::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void HatchPanelEject::Execute() {
-    gamePieceManipulator->Eject();
+    gamePieceManipulator->HatchEject();
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -26,11 +26,11 @@ bool HatchPanelEject::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void HatchPanelEject::End() {
-    gamePieceManipulator->Inject();
+    gamePieceManipulator->HatchInject();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void HatchPanelEject::Interrupted() {
-    gamePieceManipulator->Inject();
+    gamePieceManipulator->HatchInject();
 }

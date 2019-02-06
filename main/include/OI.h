@@ -6,8 +6,22 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include <frc/XboxController.h>
+#include <frc/Buttons/JoystickButton.h>
 
 class OI {
  public:
   OI();
+  frc::XboxController *m_XboxDriver;
+  frc::XboxController *m_XboxCoDriver;
+  frc::JoystickButton *btnEjectHatchPanel;
+  frc::JoystickButton *btnIntakeCargoBall;
+  frc::JoystickButton *btnEjectCargoBall;
+  frc::JoystickButton *bntRaiseGamePieceManipulator;
+  frc::JoystickButton *btnLowerGamePieceManipulator;
+  frc::JoystickButton *btnHABLift;
+  frc::JoystickButton *btnHABRetractFront;
+  frc::JoystickButton *btnHABRetractRear;
+  frc::JoystickButton *btnHABForward;
+  frc::JoystickButton *btnHABReverse;
 };

@@ -20,7 +20,7 @@ void GamePieceManipulatorManual::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void GamePieceManipulatorManual::Execute() {
-  gamePieceManipulator->Move(velocity);
+//  gamePieceManipulator->Move(velocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -28,7 +28,7 @@ bool GamePieceManipulatorManual::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void GamePieceManipulatorManual::End() {
-  gamePieceManipulator->Stop();
+//  gamePieceManipulator->Stop();
 }
 
 // Called when another command which requires one or more of the same

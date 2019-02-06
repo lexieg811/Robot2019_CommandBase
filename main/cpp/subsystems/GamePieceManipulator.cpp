@@ -37,6 +37,7 @@ void GamePieceManipulator::HatchInject() {
     hatchPanel->Set(frc::DoubleSolenoid::Value::kReverse);
   }
 
+#if 0
 /*******************************
     Arm Raise & Lower Methods
 ********************************/
@@ -55,7 +56,7 @@ void GamePieceManipulator::Lower(double v) {
 void GamePieceManipulator::Stop() {
     hingeMotor->Set(0.0);
 }
-
+#endif
 /*******************************
     Cargo Ball Methods
 ********************************/

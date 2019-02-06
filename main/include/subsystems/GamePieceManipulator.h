@@ -8,13 +8,26 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
+#include <frc/DoubleSolenoid.h>
+#include <ctre/Phoenix.h>
 
 class GamePieceManipulator : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
+  // Pneumatic Hatch Panel Eject
+  frc::DoubleSolenoid *hatchPanel;
+
+  // Cargo Ball Intake/Eject Motor
+  WPI_TalonSRX *ballMotor;
+
+  // Hinge Raise/Lower Motor
+  WPI_TalonSRX *hingeMotor;
+
  public:
   GamePieceManipulator();
   void InitDefaultCommand() override;
+  void Eject();
+  void Inject();
 };

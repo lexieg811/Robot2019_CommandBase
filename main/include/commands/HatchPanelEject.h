@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class HatchPanelEject : public frc::Command {
+class HatchPanelEject : public CommandBase {
  public:
   HatchPanelEject();
   void Initialize() override;

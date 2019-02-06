@@ -10,15 +10,22 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include "CommandBase.h"
 
 #include "OI.h"
 #include "commands/ExampleCommand.h"
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
+#include "commands/CargoBallEject.h"
+#include "commands/CargoBallIntake.h"
+#include "subsystems/GamePieceManipulator.h"
+
 
 class Robot : public frc::TimedRobot {
  public:
+  // Subsystems
   static ExampleSubsystem m_subsystem;
+  static GamePieceManipulator m_gamePieceManipulator;
   static OI m_oi;
 
   void RobotInit() override;
@@ -30,6 +37,7 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
+
 
  private:
   // Have it null by default so that if testing teleop it

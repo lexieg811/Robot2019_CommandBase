@@ -4,26 +4,33 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 #include "commands/HatchPanelEject.h"
+#include "subsystems/GamePieceManipulator.h"
 
 HatchPanelEject::HatchPanelEject() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(gamePieceManipulator);
 }
 
 // Called just before this Command runs the first time
 void HatchPanelEject::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void HatchPanelEject::Execute() {}
+void HatchPanelEject::Execute() {
+    gamePieceManipulator->Eject();
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool HatchPanelEject::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void HatchPanelEject::End() {}
+void HatchPanelEject::End() {
+    gamePieceManipulator->Inject();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void HatchPanelEject::Interrupted() {}
+void HatchPanelEject::Interrupted() {
+    gamePieceManipulator->Inject();
+}

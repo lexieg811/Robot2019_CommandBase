@@ -7,7 +7,7 @@
 
 #pragma once
 #include <frc/XboxController.h>
-#include <frc/Buttons/JoystickButton.h>
+#include <frc/buttons/JoystickButton.h>
 
 class OI {
  public:

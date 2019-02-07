@@ -17,6 +17,7 @@
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 
+#include "subsystems/MecanumDriveSystem.h"
 #include "subsystems/GamePieceManipulator.h"
 #include "subsystems/HABClimber.h"
 #include "subsystems/Utility.h"
@@ -25,7 +26,6 @@ class Robot : public frc::TimedRobot {
  public:
   // Subsystems
   static ExampleSubsystem m_subsystem;
-  static GamePieceManipulator m_gamePieceManipulator;
   static OI m_oi;
 
   void RobotInit() override;
@@ -43,6 +43,7 @@ class Robot : public frc::TimedRobot {
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::Command* m_autonomousCommand = nullptr;
+	frc::Command *m_teleopCommand = nullptr;
   ExampleCommand m_defaultAuto;
   MyAutoCommand m_myAuto;
   frc::SendableChooser<frc::Command*> m_chooser;

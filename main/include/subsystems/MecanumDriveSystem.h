@@ -40,5 +40,7 @@ class MecanumDriveSystem : public frc::Subsystem {
  public:
   MecanumDriveSystem();
   void InitDefaultCommand() override;
+  void Go(double, double, double, double);
+  void Stop();
 	frc::MecanumDrive *m_robotDrive;
 };

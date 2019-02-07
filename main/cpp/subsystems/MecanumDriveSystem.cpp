@@ -22,6 +22,11 @@ void MecanumDriveSystem::InitDefaultCommand() {
 	m_robotDrive->SetSafetyEnabled(false);
 
 }
-
+void MecanumDriveSystem::Go(double x, double y, double twist, double angle) {
+  m_robotDrive->DriveCartesian(x, y, twist, angle);
+}
+void MecanumDriveSystem::Stop() {
+  m_robotDrive->DriveCartesian(0.0, 0.0, 0.0, 0.0);
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

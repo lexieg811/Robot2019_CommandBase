@@ -1,7 +1,8 @@
 #include "CommandBase.h"
-#include "frc/Commands/Scheduler.h"
+#include <frc/commands/Scheduler.h>
 
 // Initialize a single static pointer/instance of all of your subsystems to NULL
+OI* CommandBase::oi = NULL;
 MecanumDriveSystem* CommandBase::mecanumDriveSystem = NULL;
 GamePieceManipulator* CommandBase::gamePieceManipulator = NULL;
 HABClimber* CommandBase::habClimber = NULL;
@@ -13,6 +14,7 @@ CommandBase::CommandBase(): frc::Command() {}
 
 void CommandBase::init()
 {
+    oi = new OI();
     mecanumDriveSystem = new MecanumDriveSystem();
     gamePieceManipulator = new GamePieceManipulator();
     habClimber = new HABClimber();

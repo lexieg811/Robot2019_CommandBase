@@ -16,7 +16,7 @@
 #include "commands/ExampleCommand.h"
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
-
+#include "commands/MecanumDriveCommand.h"
 #include "subsystems/MecanumDriveSystem.h"
 #include "subsystems/GamePieceManipulator.h"
 #include "subsystems/HABClimber.h"
@@ -26,7 +26,7 @@ class Robot : public frc::TimedRobot {
  public:
   // Subsystems
   static ExampleSubsystem m_subsystem;
-  static OI m_oi;
+  // static OI m_oi;
 
   void RobotInit() override;
   void RobotPeriodic() override;

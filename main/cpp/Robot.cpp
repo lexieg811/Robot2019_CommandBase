@@ -9,12 +9,11 @@
 #include "env.h"
 
 #include "Robot.h"
-#include "CommandBase.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 ExampleSubsystem Robot::m_subsystem;
-OI Robot::m_oi;
+//OI Robot::m_oi;
 
 void Robot::RobotInit() {
   // Instantiate all subsystems objects 
@@ -83,8 +82,8 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  // m_teleopCommand = new MecanumDriveCommand();
-
+  m_teleopCommand = new MecanumDriveCommand();
+  m_teleopCommand->Start();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

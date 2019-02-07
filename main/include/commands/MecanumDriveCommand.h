@@ -18,4 +18,9 @@ class MecanumDriveCommand : public CommandBase {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  double GetX();
+  double GetY();
+  double GetInvertedY();
+  double GetTwist();
 };

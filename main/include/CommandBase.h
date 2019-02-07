@@ -23,6 +23,7 @@ public:
 	CommandBase();
 	static void init();
 	// Create a single static instance of all of your subsystems
+	static OI *oi;
 	static MecanumDriveSystem *mecanumDriveSystem;
     static GamePieceManipulator *gamePieceManipulator;
 	static HABClimber *habClimber;

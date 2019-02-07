@@ -5,6 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//On error, create env.h from env-default.h and modify ROBOT_VERSION_STRING
+#include "env.h"
+
 #include "Robot.h"
 #include "CommandBase.h"
 #include <frc/commands/Scheduler.h>
@@ -16,10 +19,11 @@ OI Robot::m_oi;
 void Robot::RobotInit() {
   // Instantiate all subsystems objects 
   CommandBase::init();
-  
+
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
 }
 
 /**
@@ -79,6 +83,8 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+  // m_teleopCommand = new MecanumDriveCommand();
+
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

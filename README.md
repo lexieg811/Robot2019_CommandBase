@@ -5,11 +5,11 @@ FRC 2019 Command-Based Robot Deep Space
   * ~~Square Inputs to drive~~
   * Climber controls/functionality
   * Cargo Ball control/functionality
-  * Signal light control/functionality
+  * ~~Signal light control/functionality~~
   * ~~Add navX for gyro control~~
   * Hinge/arm manual control
   * Hinge/arm position control (software stops)
-  * Camera functionality and control
+  * ~~Camera functionality and control~~
   * Test/Fix code version string (env.h)
 
 ## SubSystems

@@ -7,7 +7,7 @@
 
 #include "subsystems/Utility.h"
 
-Utility::Utility() : Subsystem("ExampleSubsystem") {}
+Utility::Utility() : Subsystem("Utility") {}
 
 void Utility::InitDefaultCommand() {
   // Set the default command for a subsystem here.

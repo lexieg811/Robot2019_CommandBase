@@ -7,7 +7,7 @@
 
 #include "subsystems/MecanumDriveSystem.h"
 
-MecanumDriveSystem::MecanumDriveSystem() : Subsystem("ExampleSubsystem") {}
+MecanumDriveSystem::MecanumDriveSystem() : Subsystem("MecanumDriveSystem") {}
 
 void MecanumDriveSystem::InitDefaultCommand() {
   // Set the default command for a subsystem here.

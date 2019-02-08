@@ -11,6 +11,7 @@
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h> // Required by WPI_TalonSRX class
 #include <rev/CANSparkMax.h>
+#include <AHRS.h>
 
 class MecanumDriveSystem : public frc::Subsystem {
  private:
@@ -36,11 +37,13 @@ class MecanumDriveSystem : public frc::Subsystem {
   rev::CANEncoder rr_encoder = rr.GetEncoder();
 
 //  AHRS gyro{SPI::Port::kMXP};
+  AHRS *gyro;
 
  public:
   MecanumDriveSystem();
   void InitDefaultCommand() override;
-  void Go(double, double, double, double);
+  void Go(double, double, double);
+  void Saucer(double, double, double);
   void Stop();
 	frc::MecanumDrive *m_robotDrive;
 };

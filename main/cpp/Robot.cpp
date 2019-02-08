@@ -82,7 +82,10 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  m_teleopCommand = new MecanumDriveCommand();
+  // To use Field-Centric steering (Saucer Mode), pass a TRUE to the command.
+  // FALSE will use Robot-Centric (relative) steering
+  // This value should come from the sendable chooser/dashboard
+  m_teleopCommand = new MecanumDriveCommand(true);
   m_teleopCommand->Start();
 }
 

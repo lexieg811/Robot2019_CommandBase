@@ -12,7 +12,7 @@
 
 class MecanumDriveCommand : public CommandBase {
  public:
-  MecanumDriveCommand();
+  MecanumDriveCommand(bool);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -23,4 +23,5 @@ class MecanumDriveCommand : public CommandBase {
   double GetY();
   double GetInvertedY();
   double GetTwist();
+  bool useGyro; // Relative vs. absolute steering using gyro
 };

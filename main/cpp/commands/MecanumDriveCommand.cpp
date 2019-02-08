@@ -8,10 +8,11 @@
 #include "commands/MecanumDriveCommand.h"
 #include "OI.h"
 
-MecanumDriveCommand::MecanumDriveCommand() {
+MecanumDriveCommand::MecanumDriveCommand(bool g) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   // Requires mecanumDriveSystem();
+  useGyro = g;
 }
 
 // Called just before this Command runs the first time
@@ -19,7 +20,12 @@ void MecanumDriveCommand::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void MecanumDriveCommand::Execute() {
-  mecanumDriveSystem->Go(this->GetX(), this->GetY(), this->GetTwist(), 0.0);
+  if (useGyro) {
+    mecanumDriveSystem->Saucer(this->GetX(), this->GetY(), this->GetTwist());
+  }
+  else {
+    mecanumDriveSystem->Go(this->GetX(), this->GetY(), this->GetTwist());
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()

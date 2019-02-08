@@ -30,7 +30,8 @@ OI::OI() {
   m_XboxDriver = new frc::XboxController(0); // Driver in USB slot zero
   m_XboxCoDriver = new frc::XboxController(1); // Driver in USB slot one
 
-  btnEjectHatchPanel = new frc::JoystickButton(m_XboxDriver, 1); // A button
+  btnEjectHatchPanel = new frc::JoystickButton(m_XboxDriver, 1);    // A button
+  btnUtilityLight = new frc::JoystickButton(m_XboxDriver, 2);       // Cargo/Hatch Panel indicator
 //  btnIntakeCargoBall = new frc::JoystickButton(m_XboxDriver, 3);
 //  btnEjectCargoBall = new frc::JoystickButton(m_XboxDriver, 4);
   btnRaiseGamePieceManipulator = new frc::JoystickButton(m_XboxDriver, 5);
@@ -40,7 +41,6 @@ OI::OI() {
 //  btnHABRetractRear = new frc::JoystickButton();
 //  btnHABForward = new frc::JoystickButton();
 //  btnHABReverse = new frc::JoystickButton();
-
   btnEjectHatchPanel->WhileHeld(new HatchPanelEject);
   
   btnRaiseGamePieceManipulator->WhileHeld(new GamePieceManipulatorManual(1.0));

@@ -21,10 +21,10 @@ void MecanumDriveCommand::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void MecanumDriveCommand::Execute() {
   if (useGyro) {
-    mecanumDriveSystem->Saucer(this->GetX(), this->GetY(), this->GetTwist());
+    mecanumDriveSystem->Saucer(this->GetX(), this->GetInvertedY(), this->GetTwist());
   }
   else {
-    mecanumDriveSystem->Go(this->GetX(), this->GetY(), this->GetTwist());
+    mecanumDriveSystem->Go(this->GetX(), this->GetInvertedY(), this->GetTwist());
   }
 }
 
@@ -68,7 +68,6 @@ double MecanumDriveCommand::Deadband(double val)
   }
   if (val != 0) {
    newVal = pow(val, 2);
-   printf("newVal: %f", newVal);
   } 
   if (val >= 0) {
     return newVal;

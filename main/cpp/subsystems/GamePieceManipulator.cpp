@@ -15,6 +15,11 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
   ballMotor = new WPI_TalonSRX(6); // CAN ID
   // Hinge Raise/Lower Motor
   hingeMotor = new WPI_TalonSRX(7); // CAN ID
+  hingePot = new frc::AnalogInput(0);
+  hingePot->SetOversampleBits(4);
+  int bits = hingePot->GetOversampleBits();
+  hingePot->SetAverageBits(2);
+  bits = hingePot->GetAverageBits();
 
 }
 
@@ -42,10 +47,24 @@ void GamePieceManipulator::HatchInject() {
 ********************************/
 
 void GamePieceManipulator::Move(double v) {
-    hingeMotor->Set(v);
+
+    double position = hingePot->GetVoltage();
+
+    if (v > 0 && position > HINGE_MIN
+        || v < 0 && position < HINGE_MAX) {
+        hingeMotor->Set(v);
+    }
+    else {
+        hingeMotor->Set(0.0);
+    }
 }
 void GamePieceManipulator::Stop() {
     hingeMotor->Set(0.0);
+}
+
+
+double GamePieceManipulator::GetPosition() {
+    return hingePot->GetVoltage();
 }
 
 /*******************************

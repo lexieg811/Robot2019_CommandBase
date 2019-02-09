@@ -10,6 +10,13 @@
 #include <frc/commands/Subsystem.h>
 #include <frc/DoubleSolenoid.h>
 #include <ctre/Phoenix.h>
+#include <frc/AnalogInput.h>
+
+// Max and min voltage for hinge pot positions
+#define HINGE_MAX 4.7
+#define HINGE_MIN .9
+// Top: 4.7V Bottom: 1.2V (3.5V = 90 degrees)
+// Appox .039V per degree
 
 class GamePieceManipulator : public frc::Subsystem {
  private:
@@ -24,6 +31,8 @@ class GamePieceManipulator : public frc::Subsystem {
 
   // Hinge Raise/Lower Motor
   WPI_TalonSRX *hingeMotor;
+  frc::AnalogInput *hingePot;
+  
 
  public:
   GamePieceManipulator();
@@ -32,7 +41,9 @@ class GamePieceManipulator : public frc::Subsystem {
   void HatchInject();
   void Move(double); // manual arm raise/lower
   void Stop();
+  double GetPosition();
   void CargoLoad();
   void CargoEject();
   void CargoStop();
+  void GetAngle();
 };

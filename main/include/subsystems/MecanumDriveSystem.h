@@ -45,5 +45,6 @@ class MecanumDriveSystem : public frc::Subsystem {
   void Go(double, double, double);
   void Saucer(double, double, double);
   void Stop();
+  void GyroReset();
 	frc::MecanumDrive *m_robotDrive;
 };

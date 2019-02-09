@@ -31,7 +31,7 @@ OI::OI() {
   m_XboxCoDriver = new frc::XboxController(1); // Driver in USB slot one
 
   // A button: Pneumatic Panel Eject
-  btnEjectHatchPanel = new frc::JoystickButton(m_XboxDriver, 1);
+  btnEjectHatchPanel = new frc::JoystickButton(m_XboxDriver, 6);
   btnEjectHatchPanel->WhileHeld(new HatchPanelEject);
 
   // B button: Signal light to indicate Cargo/Hatch Panel
@@ -40,6 +40,8 @@ OI::OI() {
 
 //  btnIntakeCargoBall = new frc::JoystickButton(m_XboxDriver, 3);
 //  btnEjectCargoBall = new frc::JoystickButton(m_XboxDriver, 4);
+  btnGyroReset = new frc::JoystickButton(m_XboxDriver, 4);
+// HAB Lift implemented as variable control
 //  btnHABLift = new frc::JoystickButton();
 //  btnHABRetractFront = new frc::JoystickButton();
 //  btnHABRetractRear = new frc::JoystickButton();

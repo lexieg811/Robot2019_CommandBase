@@ -23,4 +23,5 @@ class OI {
   frc::JoystickButton *btnHABForward;
   frc::JoystickButton *btnHABReverse;
   frc::JoystickButton *btnSignalLight;
+  frc::JoystickButton *btnGyroReset;
 };

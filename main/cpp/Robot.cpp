@@ -19,9 +19,13 @@ void Robot::RobotInit() {
   // Instantiate all subsystems objects 
   CommandBase::init();
 
+  cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+	camera.SetResolution(640, 480);
+
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
 
 }
 
@@ -87,6 +91,8 @@ void Robot::TeleopInit() {
   // This value should come from the sendable chooser/dashboard
   m_teleopCommand = new MecanumDriveCommand(true);
   m_teleopCommand->Start();
+  m_gamePieceCommand = new GamePieceManipulatorManual();
+  m_gamePieceCommand->Start();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

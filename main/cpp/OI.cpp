@@ -8,7 +8,7 @@
 #include <frc/WPILib.h>
 #include "OI.h"
 #include "commands/HatchPanelEject.h"
-#include "commands/GamePieceManipulatorManual.h"
+#include "commands/SignalLight.h"
 
 /* ****
  *
@@ -30,19 +30,20 @@ OI::OI() {
   m_XboxDriver = new frc::XboxController(0); // Driver in USB slot zero
   m_XboxCoDriver = new frc::XboxController(1); // Driver in USB slot one
 
-  btnEjectHatchPanel = new frc::JoystickButton(m_XboxDriver, 1);    // A button
-  btnUtilityLight = new frc::JoystickButton(m_XboxDriver, 2);       // Cargo/Hatch Panel indicator
+  // A button: Pneumatic Panel Eject
+  btnEjectHatchPanel = new frc::JoystickButton(m_XboxDriver, 1);
+  btnEjectHatchPanel->WhileHeld(new HatchPanelEject);
+
+  // B button: Signal light to indicate Cargo/Hatch Panel
+  btnSignalLight = new frc::JoystickButton(m_XboxDriver, 2);
+  btnSignalLight->WhileHeld(new SignalLight);
+
 //  btnIntakeCargoBall = new frc::JoystickButton(m_XboxDriver, 3);
 //  btnEjectCargoBall = new frc::JoystickButton(m_XboxDriver, 4);
-  btnRaiseGamePieceManipulator = new frc::JoystickButton(m_XboxDriver, 5);
-  btnLowerGamePieceManipulator = new frc::JoystickButton(m_XboxDriver, 6);
 //  btnHABLift = new frc::JoystickButton();
 //  btnHABRetractFront = new frc::JoystickButton();
 //  btnHABRetractRear = new frc::JoystickButton();
 //  btnHABForward = new frc::JoystickButton();
 //  btnHABReverse = new frc::JoystickButton();
-  btnEjectHatchPanel->WhileHeld(new HatchPanelEject);
   
-  btnRaiseGamePieceManipulator->WhileHeld(new GamePieceManipulatorManual(1.0));
-  btnLowerGamePieceManipulator->WhileHeld(new GamePieceManipulatorManual(-1.0));
 }

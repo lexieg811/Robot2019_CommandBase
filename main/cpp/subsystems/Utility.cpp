@@ -7,11 +7,21 @@
 
 #include "subsystems/Utility.h"
 
-Utility::Utility() : Subsystem("Utility") {}
+Utility::Utility() : Subsystem("Utility") {
+  ballHatchLight = new frc::Relay(0);
+}
 
 void Utility::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+}
+
+void Utility::SignalLightOn() {
+  ballHatchLight->Set(frc::Relay::Value::kOn);
+}
+
+void Utility::SignalLightOff() {
+  ballHatchLight->Set(frc::Relay::Value::kOff);
 }
 
 // Put methods for controlling this subsystem

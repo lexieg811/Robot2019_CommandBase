@@ -10,6 +10,11 @@
 #include <frc/commands/Command.h>
 #include "CommandBase.h"
 
+#define DEADBAND 0.1
+#define XDEADBAND 0.1
+#define YDEADBAND 0.1
+#define TWISTDEADBAND 0.1
+
 class MecanumDriveCommand : public CommandBase {
  public:
   MecanumDriveCommand(bool);
@@ -23,5 +28,6 @@ class MecanumDriveCommand : public CommandBase {
   double GetY();
   double GetInvertedY();
   double GetTwist();
+  double Deadband(double); // Also Square inputs
   bool useGyro; // Relative vs. absolute steering using gyro
 };

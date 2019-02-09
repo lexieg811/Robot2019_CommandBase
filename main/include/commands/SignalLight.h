@@ -7,18 +7,15 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
+#include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class Utility : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-  frc::Relay *ballHatchLight;
-
+class SignalLight : public CommandBase {
  public:
-  Utility();
-  void InitDefaultCommand() override;
-  void SignalLightOn();
-  void SignalLightOff();
+  SignalLight();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

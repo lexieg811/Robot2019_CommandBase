@@ -4,41 +4,35 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-#include "commands/GamePieceManipulatorManual.h"
-#include "subsystems/GamePieceManipulator.h"
 
-GamePieceManipulatorManual::GamePieceManipulatorManual() {
+#include "commands/SignalLight.h"
+
+SignalLight::SignalLight() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(gamePieceManipulator);
+  Requires(utility);
 }
 
 // Called just before this Command runs the first time
-void GamePieceManipulatorManual::Initialize() {
-}
+void SignalLight::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void GamePieceManipulatorManual::Execute() {
-
-  double velocity;
-  
-  // Left trigger minus right trigger will provide input to move from range -1 to 1
-  velocity = oi->m_XboxDriver->GetRawAxis(HINGE_LOWER_INPUT_AXIS) - oi->m_XboxDriver->GetRawAxis(HINGE_RAISE_INPUT_AXIS); 
-
-  gamePieceManipulator->Move(velocity);
-
+void SignalLight::Execute() {
+  utility->SignalLightOn();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool GamePieceManipulatorManual::IsFinished() { return false; }
+bool SignalLight::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void GamePieceManipulatorManual::End() {
-  gamePieceManipulator->Stop();
+void SignalLight::End() {
+  utility->SignalLightOff();
+
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void GamePieceManipulatorManual::Interrupted() {
-  gamePieceManipulator->Stop();
+void SignalLight::Interrupted() {
+  utility->SignalLightOff();
+
 }

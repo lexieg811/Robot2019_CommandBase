@@ -10,14 +10,15 @@
 #include <frc/commands/Command.h>
 #include "CommandBase.h"
 
+#define HINGE_RAISE_INPUT_AXIS 2  // Left Trigger
+#define HINGE_LOWER_INPUT_AXIS 3  // Right Trigger
+
 class GamePieceManipulatorManual : public CommandBase {
  public:
-  GamePieceManipulatorManual(double);
+  GamePieceManipulatorManual();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
- private:
-  double velocity; // Speed (and direction) to move
 };

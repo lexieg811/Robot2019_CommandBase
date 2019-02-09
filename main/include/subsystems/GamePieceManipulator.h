@@ -30,8 +30,7 @@ class GamePieceManipulator : public frc::Subsystem {
   void InitDefaultCommand() override;
   void HatchEject();
   void HatchInject();
-  void Raise();
-  void Lower();
+  void Move(double); // manual arm raise/lower
   void Stop();
   void CargoLoad();
   void CargoEject();

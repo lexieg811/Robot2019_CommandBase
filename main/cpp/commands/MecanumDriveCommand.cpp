@@ -44,19 +44,36 @@ void MecanumDriveCommand::Interrupted() {
 
 double MecanumDriveCommand::GetX()
 {
-	return oi->m_XboxDriver->GetRawAxis(0); // Left stick, X axis
+	return Deadband(oi->m_XboxDriver->GetRawAxis(0)); // Left stick, X axis
 }
 double MecanumDriveCommand::GetY()
 {
-	return oi->m_XboxDriver->GetRawAxis(1); // Left Stick, Y axis
+	return Deadband(oi->m_XboxDriver->GetRawAxis(1)); // Left Stick, Y axis
 }
 
 double MecanumDriveCommand::GetInvertedY()
 {
-	return -oi->m_XboxDriver->GetRawAxis(1); // Left Stick, Y axis, Inverted
+	return -Deadband(oi->m_XboxDriver->GetRawAxis(1)); // Left Stick, Y axis, Inverted
 }
 
 double MecanumDriveCommand::GetTwist()
 {
-	return oi->m_XboxDriver->GetRawAxis(4); // Right stick, X axis
+	return Deadband(oi->m_XboxDriver->GetRawAxis(4)); // Right stick, X axis
+}
+double MecanumDriveCommand::Deadband(double val)
+{
+  double newVal;
+  if (val > -DEADBAND && val < DEADBAND) {
+    return 0.0;
+  }
+  if (val != 0) {
+   newVal = pow(val, 2);
+   printf("newVal: %f", newVal);
+  } 
+  if (val >= 0) {
+    return newVal;
+  }
+  else {
+    return -newVal;
+  }
 }

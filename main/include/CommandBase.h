@@ -1,7 +1,7 @@
 #ifndef COMMANDBASE_H
 #define COMMANDBASE_H
 
-#include <string>
+//#include <string>
 #include <frc/commands/Command.h>
 #include <frc/WPILib.h>
 #include "OI.h"
@@ -28,6 +28,5 @@ public:
     static GamePieceManipulator *gamePieceManipulator;
 	static HABClimber *habClimber;
 	static Utility *utility; 
-	// static OI *oi;
 };
 #endif

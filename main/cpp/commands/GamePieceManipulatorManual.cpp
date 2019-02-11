@@ -6,12 +6,12 @@
 /*----------------------------------------------------------------------------*/
 #include "commands/GamePieceManipulatorManual.h"
 #include "subsystems/GamePieceManipulator.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
-GamePieceManipulatorManual::GamePieceManipulatorManual(double v) {
+GamePieceManipulatorManual::GamePieceManipulatorManual() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(gamePieceManipulator);
-  velocity = v;
 }
 
 // Called just before this Command runs the first time
@@ -20,7 +20,16 @@ void GamePieceManipulatorManual::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void GamePieceManipulatorManual::Execute() {
-//  gamePieceManipulator->Move(velocity);
+
+  double velocity;
+  
+  // Left trigger minus right trigger will provide input to move from range -1 to 1
+  velocity = oi->m_XboxCoDriver->GetRawAxis(HINGE_LOWER_INPUT_AXIS) - oi->m_XboxCoDriver->GetRawAxis(HINGE_RAISE_INPUT_AXIS); 
+
+  gamePieceManipulator->Move(velocity);
+  // Display arm/hinge position on the dashboard
+  frc::SmartDashboard::PutNumber("Hinge Angle", gamePieceManipulator->GetPosition());
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -28,9 +37,11 @@ bool GamePieceManipulatorManual::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void GamePieceManipulatorManual::End() {
-//  gamePieceManipulator->Stop();
+  gamePieceManipulator->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void GamePieceManipulatorManual::Interrupted() {}
+void GamePieceManipulatorManual::Interrupted() {
+  gamePieceManipulator->Stop();
+}

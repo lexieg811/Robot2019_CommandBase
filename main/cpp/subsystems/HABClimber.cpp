@@ -7,7 +7,7 @@
 
 #include "subsystems/HABClimber.h"
 
-HABClimber::HABClimber() : Subsystem("ExampleSubsystem") {}
+HABClimber::HABClimber() : Subsystem("HABClimber") {}
 
 void HABClimber::InitDefaultCommand() {
   // Set the default command for a subsystem here.

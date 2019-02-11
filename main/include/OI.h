@@ -17,11 +17,11 @@ class OI {
   frc::JoystickButton *btnEjectHatchPanel;
   frc::JoystickButton *btnIntakeCargoBall;
   frc::JoystickButton *btnEjectCargoBall;
-  frc::JoystickButton *btnRaiseGamePieceManipulator;
-  frc::JoystickButton *btnLowerGamePieceManipulator;
   frc::JoystickButton *btnHABLift;
   frc::JoystickButton *btnHABRetractFront;
   frc::JoystickButton *btnHABRetractRear;
   frc::JoystickButton *btnHABForward;
   frc::JoystickButton *btnHABReverse;
+  frc::JoystickButton *btnSignalLight;
+  frc::JoystickButton *btnGyroReset;
 };

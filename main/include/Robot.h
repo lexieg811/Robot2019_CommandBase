@@ -12,21 +12,33 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include "CommandBase.h"
 
-#include "OI.h"
+// Example Commands & Subsystem
 #include "commands/ExampleCommand.h"
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 
+// Drive commands & Subsystem
+#include "commands/MecanumDriveCommand.h"
 #include "subsystems/MecanumDriveSystem.h"
+
+// Game Piece Manipulator commands & Subsystem
+#include "commands/GamePieceManipulatorManual.h"
+#include "commands/HatchPanelEject.h"
 #include "subsystems/GamePieceManipulator.h"
+
 #include "subsystems/HABClimber.h"
+
+// Utility subsystem and commands
+#include "commands/SignalLight.h"
 #include "subsystems/Utility.h"
+
+#include "OI.h"
 
 class Robot : public frc::TimedRobot {
  public:
   // Subsystems
   static ExampleSubsystem m_subsystem;
-  static OI m_oi;
+  // static OI m_oi;
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -44,6 +56,7 @@ class Robot : public frc::TimedRobot {
   // doesn't have undefined behavior and potentially crash.
   frc::Command* m_autonomousCommand = nullptr;
 	frc::Command *m_teleopCommand = nullptr;
+  frc::Command *m_gamePieceCommand = nullptr;
   ExampleCommand m_defaultAuto;
   MyAutoCommand m_myAuto;
   frc::SendableChooser<frc::Command*> m_chooser;

@@ -9,21 +9,27 @@
 #include "env.h"
 
 #include "Robot.h"
-#include "CommandBase.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/shuffleboard/Shuffleboard.h>
 
 ExampleSubsystem Robot::m_subsystem;
-OI Robot::m_oi;
+//OI Robot::m_oi;
 
 void Robot::RobotInit() {
   // Instantiate all subsystems objects 
   CommandBase::init();
 
+  cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+	camera.SetResolution(640, 480);
+
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  frc::SmartDashboard::PutString("Code Version", ROBOT_VERSION_STRING);
 
+  frc::Shuffleboard::GetTab("Arm").Add("Hinge Position", CommandBase::gamePieceManipulator->GetPosition());
+  frc::SmartDashboard::PutNumber("Hinge Position", CommandBase::gamePieceManipulator->GetPosition());
 }
 
 /**
@@ -34,7 +40,9 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+
+}
 
 /**
  * This function is called once each time the robot enters Disabled mode. You
@@ -83,8 +91,13 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  // m_teleopCommand = new MecanumDriveCommand();
-
+  // To use Field-Centric steering (Saucer Mode), pass a TRUE to the command.
+  // FALSE will use Robot-Centric (relative) steering
+  // This value should come from the sendable chooser/dashboard
+  m_teleopCommand = new MecanumDriveCommand(false);
+  m_teleopCommand->Start();
+  m_gamePieceCommand = new GamePieceManipulatorManual();
+  m_gamePieceCommand->Start();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

@@ -1,7 +1,7 @@
 #ifndef COMMANDBASE_H
 #define COMMANDBASE_H
 
-#include <string>
+//#include <string>
 #include <frc/commands/Command.h>
 #include <frc/WPILib.h>
 #include "OI.h"
@@ -23,10 +23,10 @@ public:
 	CommandBase();
 	static void init();
 	// Create a single static instance of all of your subsystems
+	static OI *oi;
 	static MecanumDriveSystem *mecanumDriveSystem;
     static GamePieceManipulator *gamePieceManipulator;
 	static HABClimber *habClimber;
 	static Utility *utility; 
-	// static OI *oi;
 };
 #endif

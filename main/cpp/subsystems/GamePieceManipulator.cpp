@@ -70,12 +70,12 @@ double GamePieceManipulator::GetPosition() {
 /*******************************
     Cargo Ball Methods
 ********************************/
-void CargoLoad() {
-
+void GamePieceManipulator::CargoLoad() {
+    ballMotor->Set(1.0);
 }
-void CargoEject() {
-  
+void GamePieceManipulator::CargoEject() {
+    ballMotor->Set(-1.0);
 }
-void CargoStop() {
-  
+void GamePieceManipulator::CargoStop() {
+    ballMotor->Set(0.0);
 }

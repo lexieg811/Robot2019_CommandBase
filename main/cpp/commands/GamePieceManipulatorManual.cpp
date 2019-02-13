@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 #include "commands/GamePieceManipulatorManual.h"
 #include "subsystems/GamePieceManipulator.h"
-#include <frc/Smartdashboard/Smartdashboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 GamePieceManipulatorManual::GamePieceManipulatorManual() {
   // Use Requires() here to declare subsystem dependencies

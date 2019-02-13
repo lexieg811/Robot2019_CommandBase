@@ -7,6 +7,9 @@
 
 #include "commands/HABLift.h"
 #include "subsystems/HABClimber.h"
+#include "OI.h"
+
+#define DEADBAND .15
 
 HABLift::HABLift() {
   // Use Requires() here to declare subsystem dependencies
@@ -19,19 +22,25 @@ void HABLift::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void HABLift::Execute() {
-  if (-m_XboxCoDriver.GetRawAxis(1) > DEADBAND) {
+  // Front Lifter
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  if (-oi->m_XboxCoDriver->GetRawAxis(1) > DEADBAND) {
     habClimber->LiftFront();
   }
-  else if (m_XboxCoDriver.GetRawAxis(1) < -DEADBAND) {
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  else if (-oi->m_XboxCoDriver->GetRawAxis(1) < -DEADBAND) {
     habClimber->LowerFront();
   }
   else {
      habClimber->StopFront();
   }
-  if (-m_XboxCoDriver.GetRawAxis(5) > DEADBAND) {
+  // Rear Lifter
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  if (-oi->m_XboxCoDriver->GetRawAxis(5) > DEADBAND) {
     habClimber->LiftRear();
   }
-  else if (m_XboxCoDriver.GetRawAxis(5) < -DEADBAND) {
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  else if (-oi->m_XboxCoDriver->GetRawAxis(5) < -DEADBAND) {
     habClimber->LowerRear();
   }
   else {

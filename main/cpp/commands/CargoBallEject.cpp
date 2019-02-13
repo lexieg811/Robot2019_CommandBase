@@ -8,6 +8,7 @@
 #include "commands/CargoBallEject.h"
 
 CargoBallEject::CargoBallEject() {
+  Requires(gamePieceManipulator); 
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
@@ -16,14 +17,20 @@ CargoBallEject::CargoBallEject() {
 void CargoBallEject::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CargoBallEject::Execute() {}
+void CargoBallEject::Execute() {
+  gamePieceManipulator->CargoEject();
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CargoBallEject::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CargoBallEject::End() {}
+void CargoBallEject::End() {
+  gamePieceManipulator->CargoStop();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CargoBallEject::Interrupted() {}
+void CargoBallEject::Interrupted() {
+  gamePieceManipulator->CargoStop();
+}

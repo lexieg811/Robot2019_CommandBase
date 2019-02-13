@@ -8,6 +8,11 @@
 #include "subsystems/HABClimber.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#define HAB_DRIVE_MOTOR 2
+#define LIFT_MOTOR_F 3
+#define LIFT_MOTOR_L 4
+#define LIFT_MOTOR_R 5
+
 #define UP 1.0
 #define DOWN -UP
 #define FWD 1.0

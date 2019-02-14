@@ -19,3 +19,10 @@ class HABLift : public CommandBase {
   void End() override;
   void Interrupted() override;
 };
+
+//These: * & -> all have something to do with pointers but I don't understand pointers, why we use them, or how to use them
+//so I'm really confused on how to transfer things from the Protobot to the real Robot
+//Other Things I'm Confused About: 
+//    -what do I put in the HABClimber.cpp subsystem? 
+//    -how do I organise everything in the HABLift.cpp command?
+//    -how do all the HAB commands fit together?

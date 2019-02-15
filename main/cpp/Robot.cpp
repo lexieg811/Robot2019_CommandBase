@@ -98,6 +98,8 @@ void Robot::TeleopInit() {
   m_teleopCommand->Start();
   m_gamePieceCommand = new GamePieceManipulatorManual();
   m_gamePieceCommand->Start();
+  m_habClimbCommand = new HABLift();
+  m_habClimbCommand->Start();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

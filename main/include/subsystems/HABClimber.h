@@ -8,13 +8,38 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
 
 class HABClimber : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+  WPI_TalonSRX *liftMotorR; // Right
+  WPI_TalonSRX *liftMotorL; // Left
+  WPI_TalonSRX *liftMotorF; // Front
+  WPI_TalonSRX *habDriveMotor; // Climber Drive Fwd/Rev
+  // String Pots
+  // AnalogInput *liftMotorRpot; 
+  // AnalogInput *liftMotorLpot; 
+  // AnalogInput *liftMotorFpot; 
 
  public:
   HABClimber();
+  void Lift();
+  void Lower();
+  void Stop();
+  /* */
+  void LiftFront();
+  void LowerFront();
+  void StopFront();
+  /* */
+  void LiftRear();
+  void LowerRear();
+  void StopRear();
+  /* */
+  void DriveFwd();
+  void DriveRev();
+  void DriveStop();
+  /* */
   void InitDefaultCommand() override;
 };

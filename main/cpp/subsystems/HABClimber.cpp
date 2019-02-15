@@ -6,8 +6,24 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/HABClimber.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
-HABClimber::HABClimber() : Subsystem("HABClimber") {}
+#define HAB_DRIVE_MOTOR 7
+#define LIFT_MOTOR_F 5
+#define LIFT_MOTOR_L 3
+#define LIFT_MOTOR_R 2
+
+#define UP 1.0
+#define DOWN -UP
+#define FWD 1.0
+#define REV -FWD
+
+HABClimber::HABClimber() : Subsystem("HABClimber") {
+  liftMotorF = new WPI_TalonSRX(LIFT_MOTOR_F);
+  liftMotorL = new WPI_TalonSRX(LIFT_MOTOR_L);
+  liftMotorR = new WPI_TalonSRX(LIFT_MOTOR_R);
+  habDriveMotor = new WPI_TalonSRX(HAB_DRIVE_MOTOR);
+}
 
 void HABClimber::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -16,3 +32,65 @@ void HABClimber::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+/*
+* Lift/Lower/Stop - ALL Motors
+*/
+void HABClimber::Lift() {
+  liftMotorF->Set(UP);
+  liftMotorR->Set(UP);
+  liftMotorL->Set(UP);
+}
+void HABClimber::Lower() {
+  liftMotorF->Set(DOWN);
+  liftMotorR->Set(DOWN);
+  liftMotorL->Set(DOWN);
+}
+/*
+* Stop ALL Climber Motors
+*/
+void HABClimber::Stop() {
+    liftMotorF->Set(0.0);
+    liftMotorR->Set(0.0);
+    liftMotorL->Set(0.0);
+    habDriveMotor->Set(0.0);
+}
+/*
+* Lift/Lower FRONT Motors
+*/
+void HABClimber::LiftFront() {
+    liftMotorF->Set(UP);
+}
+void HABClimber::LowerFront(){
+    liftMotorF->Set(DOWN);
+}
+void HABClimber::StopFront(){
+    liftMotorF->Set(0.0);
+}
+/*
+*  Lift/Lower/Stop Rear climb motors
+*/
+void HABClimber::LiftRear() {
+    liftMotorR->Set(UP);
+    liftMotorL->Set(UP);  
+}
+
+void HABClimber::LowerRear() {
+    liftMotorR->Set(DOWN);
+    liftMotorL->Set(DOWN);  
+}
+void HABClimber::StopRear() {
+    liftMotorR->Set(0.0);
+    liftMotorL->Set(0.0);  
+}
+/*
+* Forward/Reverse/Stop Drive
+*/
+void HABClimber::DriveFwd() {
+    habDriveMotor->Set(FWD);
+}
+void HABClimber::DriveRev() {
+    habDriveMotor->Set(REV);
+}
+void HABClimber::DriveStop() {
+    habDriveMotor->Set(0.0);  
+}

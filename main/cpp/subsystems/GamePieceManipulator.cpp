@@ -52,12 +52,14 @@ void GamePieceManipulator::HatchInject() {
     Arm Raise & Lower Methods
 ********************************/
 //v = velocity
+#define GP_DEADBAND 0.5
 void GamePieceManipulator::Move(double v) {
 
     double positionL = hingePotL->GetVoltage();
 
-    if ((v > 0 && positionL > HINGE_MIN_LEFT)
-        || (v < 0 && positionL < HINGE_MAX_LEFT)) {
+    if ((v > GP_DEADBAND && positionL > HINGE_MIN_LEFT)
+        || (v < -GP_DEADBAND && positionL < HINGE_MAX_LEFT)) {
+        v *= 10.0;
         hingeMotorL->Set(v);
     }
     else {
@@ -66,9 +68,10 @@ void GamePieceManipulator::Move(double v) {
 
     double positionR = hingePotR->GetVoltage();
 
-    if ((v > 0 && positionR > HINGE_MIN_RIGHT)
-        || (v < 0 && positionR < HINGE_MAX_RIGHT)) {
-        hingeMotorR->Set(v);
+    if ((v > GP_DEADBAND && positionR > HINGE_MIN_RIGHT)
+        || (v < -GP_DEADBAND && positionR < HINGE_MAX_RIGHT)) {
+        v *= 10.0;
+        hingeMotorR->Set(v*.91);
     }
     else {
         hingeMotorR->Set(0.0);
@@ -81,8 +84,10 @@ void GamePieceManipulator::Stop() {
 }
 
 
-double GamePieceManipulator::GetPosition() {
+double GamePieceManipulator::GetLPosition() {
     return hingePotL->GetVoltage();
+}
+double GamePieceManipulator::GetRPosition() {
     return hingePotR->GetVoltage();
 }
 

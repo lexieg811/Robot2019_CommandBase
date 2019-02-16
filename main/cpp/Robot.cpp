@@ -28,8 +28,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   frc::SmartDashboard::PutString("Code Version", ROBOT_VERSION_STRING);
 
-  frc::Shuffleboard::GetTab("Arm").Add("Hinge Position", CommandBase::gamePieceManipulator->GetPosition());
-  frc::SmartDashboard::PutNumber("Hinge Position", CommandBase::gamePieceManipulator->GetPosition());
+  frc::SmartDashboard::PutNumber("Left Hinge", CommandBase::gamePieceManipulator->GetLPosition());
+  frc::SmartDashboard::PutNumber("Right Hinge", CommandBase::gamePieceManipulator->GetRPosition());
 }
 
 /**

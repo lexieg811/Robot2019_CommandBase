@@ -13,8 +13,10 @@
 #include <frc/AnalogInput.h>
 
 // Max and min voltage for hinge pot positions
-#define HINGE_MAX 4.7
-#define HINGE_MIN .9
+#define HINGE_MAX_LEFT 4.7
+#define HINGE_MIN_LEFT .9
+#define HINGE_MAX_RIGHT 4.7
+#define HINGE_MIN_RIGHT .9
 // Top: 4.7V Bottom: 1.2V (3.5V = 90 degrees)
 // Appox .039V per degree
 
@@ -30,9 +32,10 @@ class GamePieceManipulator : public frc::Subsystem {
   WPI_TalonSRX *ballMotor;
 
   // Hinge Raise/Lower Motor
-  WPI_TalonSRX *hingeMotor;
-  frc::AnalogInput *hingePot;
-  
+  WPI_TalonSRX *hingeMotorL;
+  WPI_TalonSRX *hingeMotorR;
+  frc::AnalogInput *hingePotL;
+  frc::AnalogInput *hingePotR;
 
  public:
   GamePieceManipulator();

@@ -15,10 +15,10 @@
 // Max and min voltage for hinge pot positions
 #define HINGE_MAX_LEFT 4.7
 #define HINGE_MIN_LEFT .9
-#define HINGE_MAX_RIGHT 4.7
+#define HINGE_MAX_RIGHT 4.7 
 #define HINGE_MIN_RIGHT .9
 // Top: 4.7V Bottom: 1.2V (3.5V = 90 degrees)
-// Appox .039V per degree
+// Appox .039V per degree *** NON-LINEAR ***
 
 class GamePieceManipulator : public frc::Subsystem {
  private:
@@ -44,9 +44,9 @@ class GamePieceManipulator : public frc::Subsystem {
   void HatchInject();
   void Move(double); // manual arm raise/lower
   void Stop();
-  double GetPosition();
+  double GetLPosition();
+  double GetRPosition();
   void CargoLoad();
   void CargoEject();
   void CargoStop();
-  void GetAngle();
 };

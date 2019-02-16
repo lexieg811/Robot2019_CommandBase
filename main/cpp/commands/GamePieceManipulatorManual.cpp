@@ -28,7 +28,8 @@ void GamePieceManipulatorManual::Execute() {
 
   gamePieceManipulator->Move(velocity);
   // Display arm/hinge position on the dashboard
-  frc::SmartDashboard::PutNumber("Hinge Angle", gamePieceManipulator->GetPosition());
+  frc::SmartDashboard::PutNumber("Left Hinge", gamePieceManipulator->GetLPosition());
+  frc::SmartDashboard::PutNumber("Right Hinge", gamePieceManipulator->GetRPosition());
 
 }
 

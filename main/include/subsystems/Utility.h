@@ -15,10 +15,13 @@ class Utility : public frc::Subsystem {
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
   frc::Relay *ballHatchLight;
+  frc::Relay *cameraIlluminator;
+  
 
  public:
   Utility();
   void InitDefaultCommand() override;
   void SignalLightOn();
   void SignalLightOff();
+  void CameraCapture();
 };

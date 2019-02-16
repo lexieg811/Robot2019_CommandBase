@@ -12,14 +12,20 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
   // Pneumatic Hatch Panel Eject
   hatchPanel = new frc::DoubleSolenoid(0,1); // PCM Ports
   // Cargo Ball Intake/Eject Motor
-  ballMotor = new WPI_TalonSRX(6); // CAN ID
+  ballMotor = new WPI_TalonSRX(1); // CAN ID
   // Hinge Raise/Lower Motor
-  hingeMotor = new WPI_TalonSRX(7); // CAN ID
-  hingePot = new frc::AnalogInput(0);
-  hingePot->SetOversampleBits(4);
-  int bits = hingePot->GetOversampleBits();
-  hingePot->SetAverageBits(2);
-  bits = hingePot->GetAverageBits();
+  hingeMotorL = new WPI_TalonSRX(6); // CAN ID
+  hingeMotorR = new WPI_TalonSRX(7); // CAN ID
+  hingePotL = new frc::AnalogInput(0);
+  hingePotR = new frc::AnalogInput(1);
+  hingePotL->SetOversampleBits(4);
+  hingePotR->SetOversampleBits(4);
+  int bitsL = hingePotL->GetOversampleBits();
+  int bitsR = hingePotR->GetOversampleBits();
+  hingePotL->SetAverageBits(2);
+  hingePotR->SetAverageBits(2);
+  bitsL = hingePotL->GetAverageBits();
+  bitsR = hingePotR->GetAverageBits();
 
 }
 
@@ -45,26 +51,39 @@ void GamePieceManipulator::HatchInject() {
 /*******************************
     Arm Raise & Lower Methods
 ********************************/
-
+//v = velocity
 void GamePieceManipulator::Move(double v) {
 
-    double position = hingePot->GetVoltage();
+    double positionL = hingePotL->GetVoltage();
 
-    if (v > 0 && position > HINGE_MIN
-        || v < 0 && position < HINGE_MAX) {
-        hingeMotor->Set(v);
+    if ((v > 0 && positionL > HINGE_MIN_LEFT)
+        || (v < 0 && positionL < HINGE_MAX_LEFT)) {
+        hingeMotorL->Set(v);
     }
     else {
-        hingeMotor->Set(0.0);
+        hingeMotorL->Set(0.0);
     }
+
+    double positionR = hingePotR->GetVoltage();
+
+    if ((v > 0 && positionR > HINGE_MIN_RIGHT)
+        || (v < 0 && positionR < HINGE_MAX_RIGHT)) {
+        hingeMotorR->Set(v);
+    }
+    else {
+        hingeMotorR->Set(0.0);
+    }
+    
 }
 void GamePieceManipulator::Stop() {
-    hingeMotor->Set(0.0);
+    hingeMotorL->Set(0.0);
+    hingeMotorR->Set(0.0);
 }
 
 
 double GamePieceManipulator::GetPosition() {
-    return hingePot->GetVoltage();
+    return hingePotL->GetVoltage();
+    return hingePotR->GetVoltage();
 }
 
 /*******************************

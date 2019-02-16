@@ -12,14 +12,20 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
   // Pneumatic Hatch Panel Eject
   hatchPanel = new frc::DoubleSolenoid(0,1); // PCM Ports
   // Cargo Ball Intake/Eject Motor
-  ballMotor = new WPI_TalonSRX(6); // CAN ID
+  ballMotor = new WPI_TalonSRX(1); // CAN ID
   // Hinge Raise/Lower Motor
-  hingeMotor = new WPI_TalonSRX(7); // CAN ID
-  hingePot = new frc::AnalogInput(0);
-  hingePot->SetOversampleBits(4);
-  int bits = hingePot->GetOversampleBits();
-  hingePot->SetAverageBits(2);
-  bits = hingePot->GetAverageBits();
+  hingeMotorL = new WPI_TalonSRX(6); // CAN ID
+  hingeMotorR = new WPI_TalonSRX(7); // CAN ID
+  hingePotL = new frc::AnalogInput(0);
+  hingePotR = new frc::AnalogInput(1);
+  hingePotL->SetOversampleBits(4);
+  hingePotR->SetOversampleBits(4);
+  int bitsL = hingePotL->GetOversampleBits();
+  int bitsR = hingePotR->GetOversampleBits();
+  hingePotL->SetAverageBits(2);
+  hingePotR->SetAverageBits(2);
+  bitsL = hingePotL->GetAverageBits();
+  bitsR = hingePotR->GetAverageBits();
 
 }
 
@@ -45,37 +51,55 @@ void GamePieceManipulator::HatchInject() {
 /*******************************
     Arm Raise & Lower Methods
 ********************************/
-
+//v = velocity
+#define GP_DEADBAND 0.5
 void GamePieceManipulator::Move(double v) {
 
-    double position = hingePot->GetVoltage();
+    double positionL = hingePotL->GetVoltage();
 
-    if (v > 0 && position > HINGE_MIN
-        || v < 0 && position < HINGE_MAX) {
-        hingeMotor->Set(v);
+    if ((v > GP_DEADBAND && positionL > HINGE_MIN_LEFT)
+        || (v < -GP_DEADBAND && positionL < HINGE_MAX_LEFT)) {
+        v *= 10.0;
+        hingeMotorL->Set(v);
     }
     else {
-        hingeMotor->Set(0.0);
+        hingeMotorL->Set(0.0);
     }
+
+    double positionR = hingePotR->GetVoltage();
+
+    if ((v > GP_DEADBAND && positionR > HINGE_MIN_RIGHT)
+        || (v < -GP_DEADBAND && positionR < HINGE_MAX_RIGHT)) {
+        v *= 10.0;
+        hingeMotorR->Set(v*.91);
+    }
+    else {
+        hingeMotorR->Set(0.0);
+    }
+    
 }
 void GamePieceManipulator::Stop() {
-    hingeMotor->Set(0.0);
+    hingeMotorL->Set(0.0);
+    hingeMotorR->Set(0.0);
 }
 
 
-double GamePieceManipulator::GetPosition() {
-    return hingePot->GetVoltage();
+double GamePieceManipulator::GetLPosition() {
+    return hingePotL->GetVoltage();
+}
+double GamePieceManipulator::GetRPosition() {
+    return hingePotR->GetVoltage();
 }
 
 /*******************************
     Cargo Ball Methods
 ********************************/
-void CargoLoad() {
-
+void GamePieceManipulator::CargoLoad() {
+    ballMotor->Set(1.0);
 }
-void CargoEject() {
-  
+void GamePieceManipulator::CargoEject() {
+    ballMotor->Set(-1.0);
 }
-void CargoStop() {
-  
+void GamePieceManipulator::CargoStop() {
+    ballMotor->Set(0.0);
 }

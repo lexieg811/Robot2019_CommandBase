@@ -9,6 +9,8 @@
 #include "OI.h"
 #include "commands/HatchPanelEject.h"
 #include "commands/SignalLight.h"
+#include "commands/CargoBallEject.h"
+#include "commands/CargoBallIntake.h"
 
 /* ****
  *
@@ -38,14 +40,13 @@ OI::OI() {
   btnSignalLight = new frc::JoystickButton(m_XboxDriver, 2);
   btnSignalLight->WhileHeld(new SignalLight);
 
-//  btnIntakeCargoBall = new frc::JoystickButton(m_XboxDriver, 3);
-//  btnEjectCargoBall = new frc::JoystickButton(m_XboxDriver, 4);
-  btnGyroReset = new frc::JoystickButton(m_XboxDriver, 4);
-// HAB Lift implemented as variable control
-//  btnHABLift = new frc::JoystickButton();
-//  btnHABRetractFront = new frc::JoystickButton();
-//  btnHABRetractRear = new frc::JoystickButton();
-//  btnHABForward = new frc::JoystickButton();
-//  btnHABReverse = new frc::JoystickButton();
+  btnGyroReset = new frc::JoystickButton(m_XboxDriver, 9);
+
+  // Co-Driver Left/Right Bumpers control cargo ball
+  btnIntakeCargoBall = new frc::JoystickButton(m_XboxCoDriver, 5);
+  btnIntakeCargoBall->WhileHeld(new CargoBallIntake);
+
+  btnEjectCargoBall = new frc::JoystickButton(m_XboxCoDriver, 6);
+  btnEjectCargoBall->WhileHeld(new CargoBallEject);
   
 }

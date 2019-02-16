@@ -28,8 +28,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   frc::SmartDashboard::PutString("Code Version", ROBOT_VERSION_STRING);
 
-  frc::Shuffleboard::GetTab("Arm").Add("Hinge Position", CommandBase::gamePieceManipulator->GetPosition());
-  frc::SmartDashboard::PutNumber("Hinge Position", CommandBase::gamePieceManipulator->GetPosition());
+  frc::SmartDashboard::PutNumber("Left Hinge", CommandBase::gamePieceManipulator->GetLPosition());
+  frc::SmartDashboard::PutNumber("Right Hinge", CommandBase::gamePieceManipulator->GetRPosition());
 }
 
 /**
@@ -98,6 +98,8 @@ void Robot::TeleopInit() {
   m_teleopCommand->Start();
   m_gamePieceCommand = new GamePieceManipulatorManual();
   m_gamePieceCommand->Start();
+  m_habClimbCommand = new HABLift();
+  m_habClimbCommand->Start();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

@@ -20,8 +20,14 @@ void Robot::RobotInit() {
   // Instantiate all subsystems objects 
   CommandBase::init();
 
-  cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-	camera.SetResolution(640, 480);
+  cs::UsbCamera camera1 = CameraServer::GetInstance()->StartAutomaticCapture(1);
+  cs::UsbCamera camera0 = CameraServer::GetInstance()->StartAutomaticCapture(0);
+	camera1.SetResolution(640, 480);
+  camera0.SetResolution(640, 480);
+  //camera1.SetExposureHoldCurrent();
+  camera1.SetBrightness(50);
+  camera1.SetExposureManual(35);
+  camera0.SetExposureManual(35);
 
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);

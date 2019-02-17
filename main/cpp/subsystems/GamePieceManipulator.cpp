@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/GamePieceManipulator.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 // Move these to the appropriate location
 constexpr double hingeMaxLeft = 4.7;
@@ -57,6 +58,9 @@ void GamePieceManipulator::InitDefaultCommand() {
   hingePIDL->SetInputRange(-1.0, 1.0);
   hingePIDL->SetOutputRange(0.0, 1.0);
   //hingePIDL->Enable();
+  hingePIDR->SetInputRange(-1.0, 1.0);
+  hingePIDR->SetOutputRange(0.0, 1.0);
+  //hingePIDR->Enable();
   }
 
 // Put methods for controlling this subsystem
@@ -79,7 +83,7 @@ void GamePieceManipulator::HatchInject() {
 //v = velocity
 #define GP_DEADBAND 0.5
 void GamePieceManipulator::Move(double v) {
-
+    frc::SmartDashboard::PutNumber("Game Piece Set", v);
     double positionL = hingePotL->GetVoltage();
 
     if ((v > GP_DEADBAND && positionL > HINGE_MIN_LEFT)

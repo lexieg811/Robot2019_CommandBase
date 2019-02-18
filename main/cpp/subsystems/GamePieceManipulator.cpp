@@ -10,9 +10,9 @@
 
 // Move these to the appropriate location
 constexpr double hingeMaxLeft = 4.7;
-constexpr double hingeMinLeft = 0.9;
-constexpr double hingeMaxRight = 4.7;
-constexpr double hingeMinRight = 0.9;
+constexpr double hingeMinLeft = 0.7;
+constexpr double hingeMaxRight = 4.8;
+constexpr double hingeMinRight = 0.8;
 constexpr double hingeLeftKp = 1.0;
 constexpr double hingeLeftKi = 0.0;
 constexpr double hingeLeftKd = 0.0;
@@ -44,23 +44,27 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
     hingeMinLeft, hingeMaxLeft - hingeMinLeft);
   hingeInR = new HingePIDSource(hingePotR,
     hingeMinRight, hingeMaxRight - hingeMinRight);
-  hingeOutL = new HingePIDOutput(hingeMotorL);
-  hingeOutR = new HingePIDOutput(hingeMotorR);
+  hingeOutL = new HingePIDOutput(hingeMotorL),
+    hingeMinLeft, hingeMaxLeft - hingeMinLeft;
+  hingeOutR = new HingePIDOutput(hingeMotorR,
+    hingeMinRight, hingeMaxRight - hingeMinRight);
+
   hingePIDL = new frc::PIDController(hingeLeftKp, hingeLeftKi, hingeLeftKd,
     *hingeInL, *hingeOutL);
   hingePIDR = new frc::PIDController(hingeRightKp, hingeRightKi, hingeRightKd,
     *hingeInR, *hingeOutR);
+  
+  hingePIDL->SetInputRange(0.0, 1.0);  // [120,0] (here::MoveTo) <- [0,1] (PID) <- [0.7,4.7] (here)
+  hingePIDL->SetOutputRange(0.0, 1.0);
+  //hingePIDL->SetSetpoint(0.0);  // Managed in MoveToPosition
+  hingePIDR->SetInputRange(0.0, 1.0);
+  hingePIDR->SetOutputRange(0.0, 1.0);
+  //hingePIDR->SetSetpoint(0.0);  // Managed in MoveToPosition
 }
 
 void GamePieceManipulator::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
-  hingePIDL->SetInputRange(-1.0, 1.0);
-  hingePIDL->SetOutputRange(0.0, 1.0);
-  //hingePIDL->Enable();
-  hingePIDR->SetInputRange(-1.0, 1.0);
-  hingePIDR->SetOutputRange(0.0, 1.0);
-  //hingePIDR->Enable();
   }
 
 // Put methods for controlling this subsystem
@@ -106,7 +110,22 @@ void GamePieceManipulator::Move(double v) {
         hingeMotorR->Set(0.0);
     }
 }
+
+void GamePieceManipulator::MoveTo(double v) {
+}
+
+void GamePieceManipulator::EnablePIDLoop() {
+  hingePIDL->Enable();
+  hingePIDR->Enable();
+}
+
+void GamePieceManipulator::DisablePIDLoop() {
+  hingePIDL->Disable();
+  hingePIDR->Disable();
+}
+
 void GamePieceManipulator::Stop() {
+    DisablePIDLoop();
     hingeMotorL->Set(0.0);
     hingeMotorR->Set(0.0);
 }
@@ -129,7 +148,7 @@ HingePIDSource::HingePIDSource(frc::AnalogInput *pot, double min, double range)
 }
 double HingePIDSource::PIDGet() {
   double v = m_pot->GetVoltage();
-  // Scale result to [0.0, 1.0]
+  // Scale [0.7,4.7] to [0, 1] for PID
   v = (v - m_min) / m_range;
   return v;
 }
@@ -137,10 +156,15 @@ void HingePIDSource::SetPIDSourceType(frc::PIDSourceType pidSource) {
   // No-op (do not change from default)
 }
 
-HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor) : frc::PIDOutput() {
+HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor, double min, double range)
+  : frc::PIDOutput() {
+  m_min = min;
+  m_range = range;
   m_motor = motor;
 }
 void HingePIDOutput::PIDWrite(double d) {
+  // Convert PID's [0,1] to [0.7,4.7]
+  double v = d * m_range + m_min;
   m_motor->Set(d);
 }
 

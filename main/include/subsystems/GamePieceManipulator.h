@@ -57,6 +57,9 @@ class GamePieceManipulator : public frc::Subsystem {
   void HatchEject();
   void HatchInject();
   void Move(double); // manual arm raise/lower
+  void MoveTo(double); // move to position arm raise/lower
+  void EnablePIDLoop();
+  void DisablePIDLoop();
   void Stop();
   double GetLPosition();
   double GetRPosition();
@@ -79,7 +82,9 @@ class HingePIDSource : public frc::PIDSource {
 
 class HingePIDOutput : public frc::PIDOutput {
   WPI_TalonSRX *m_motor;
+  double m_min;
+  double m_range;
  public:
-  HingePIDOutput(WPI_TalonSRX *motor);
+  HingePIDOutput(WPI_TalonSRX *motor, double min, double range);
   void PIDWrite(double d);
 };

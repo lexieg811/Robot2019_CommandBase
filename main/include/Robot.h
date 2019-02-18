@@ -23,6 +23,7 @@
 
 // Game Piece Manipulator commands & Subsystem
 #include "commands/GamePieceManipulatorManual.h"
+#include "commands/GamePieceManipulatorMoveToPosition.h"
 #include "commands/HatchPanelEject.h"
 #include "subsystems/GamePieceManipulator.h"
 

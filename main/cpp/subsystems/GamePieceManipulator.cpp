@@ -9,10 +9,10 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 // Move these to the appropriate location
-constexpr double hingeMaxLeft = 4.7;
-constexpr double hingeMinLeft = 0.7;
-constexpr double hingeMaxRight = 4.8;
-constexpr double hingeMinRight = 0.8;
+constexpr double hingeMaxLeft = 4.7; // was 4.3; measured on Armada
+constexpr double hingeMinLeft = 0.7; // was 0.3;
+constexpr double hingeMaxRight = 4.8; // was 4.3;
+constexpr double hingeMinRight = 1.0; // was 0.538;
 constexpr double hingeLeftKp = 1.0;
 constexpr double hingeLeftKi = 0.0;
 constexpr double hingeLeftKd = 0.0;
@@ -53,7 +53,7 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
     *hingeInR, *hingeOutR);
   
   hingePIDL->SetInputRange(0.0, 1.0);  // [120,0] (here::MoveTo) <- [0,1] (PID) <- [0.7,4.7] (here)
-  hingePIDL->SetOutputRange(-1.0, 1.0);  //hingePIDL->SetSetpoint(0.0);  // Managed in MoveToPosition
+  hingePIDL->SetOutputRange(-1.0, 1.0);  // velocity
   hingePIDR->SetInputRange(0.0, 1.0);
   hingePIDR->SetOutputRange(-1.0, 1.0);
 }
@@ -81,14 +81,14 @@ void GamePieceManipulator::HatchInject() {
     Arm Raise & Lower Methods
 ********************************/
 //v = velocity
-#define GP_DEADBAND 0.5
+#define GP_DEADBAND 0.25
 void GamePieceManipulator::Move(double v) {
  
     double positionL = hingePotL->GetVoltage();
 
     if ((v > GP_DEADBAND && positionL > HINGE_MIN_LEFT)
         || (v < -GP_DEADBAND && positionL < HINGE_MAX_LEFT)) {
-        v *= 10.0;
+        //v *= 10.0;
         hingeMotorL->Set(v);
     }
     else {
@@ -99,7 +99,7 @@ void GamePieceManipulator::Move(double v) {
 
     if ((v > GP_DEADBAND && positionR > HINGE_MIN_RIGHT)
         || (v < -GP_DEADBAND && positionR < HINGE_MAX_RIGHT)) {
-        v *= 10.0;
+        //v *= 10.0;
         hingeMotorR->Set(v*.91);
     }
     else {
@@ -161,7 +161,7 @@ HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor)
   m_motor = motor;
 }
 void HingePIDOutput::PIDWrite(double d) {
-  m_motor->Set(d);
+  m_motor->Set(-d);
 }
 
 // ----------------------------------------------------------------------------

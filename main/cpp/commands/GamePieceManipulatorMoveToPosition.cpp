@@ -17,6 +17,11 @@ constexpr double posDeliverRocket =  60.0; // E
 constexpr double posDeliverShip   =  90.0; // F
 constexpr double posPartialStow   = 100.0; // G
 
+double degToLinear(double degree) {
+  double d = 1.0 - (degree / 120.0);
+  return d;
+}
+
 GamePieceManipulatorMoveToPosition::GamePieceManipulatorMoveToPosition() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -35,8 +40,30 @@ void GamePieceManipulatorMoveToPosition::Execute() {
   from driver_x, driver_y, codriver_x, codriver_y get named position
   if named position is different from saved
     set setpoint
-  save named position
+  save setpoint
   */
+  double newSetpoint = m_setpoint;
+  if (oi->m_XboxDriver->GetAButtonPressed()) {
+    gamePieceManipulator->Stop();
+    return;
+  }
+  else if (oi->m_XboxDriver->GetXButtonPressed()) {
+    newSetpoint = degToLinear(posStow);
+  }
+  else if (oi->m_XboxDriver->GetYButtonPressed()) {
+    newSetpoint = degToLinear(posHatchLoad);
+  }
+  else if (oi->m_XboxCoDriver->GetXButtonPressed()) {
+    newSetpoint = degToLinear(posDeliverRocket);
+  }
+  else if (oi->m_XboxCoDriver->GetYButtonPressed()) {
+    newSetpoint = degToLinear(posGround);
+  }
+  if (newSetpoint != m_setpoint) {
+    frc::SmartDashboard::PutNumber("Hatch Move to Position", newSetpoint);
+    gamePieceManipulator->MoveTo(newSetpoint);
+    m_setpoint = newSetpoint;
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()

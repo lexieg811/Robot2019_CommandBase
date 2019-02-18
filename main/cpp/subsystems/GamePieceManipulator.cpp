@@ -44,10 +44,8 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
     hingeMinLeft, hingeMaxLeft - hingeMinLeft);
   hingeInR = new HingePIDSource(hingePotR,
     hingeMinRight, hingeMaxRight - hingeMinRight);
-  hingeOutL = new HingePIDOutput(hingeMotorL),
-    hingeMinLeft, hingeMaxLeft - hingeMinLeft;
-  hingeOutR = new HingePIDOutput(hingeMotorR,
-    hingeMinRight, hingeMaxRight - hingeMinRight);
+  hingeOutL = new HingePIDOutput(hingeMotorL);
+  hingeOutR = new HingePIDOutput(hingeMotorR);
 
   hingePIDL = new frc::PIDController(hingeLeftKp, hingeLeftKi, hingeLeftKd,
     *hingeInL, *hingeOutL);
@@ -55,11 +53,9 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
     *hingeInR, *hingeOutR);
   
   hingePIDL->SetInputRange(0.0, 1.0);  // [120,0] (here::MoveTo) <- [0,1] (PID) <- [0.7,4.7] (here)
-  hingePIDL->SetOutputRange(0.0, 1.0);
-  //hingePIDL->SetSetpoint(0.0);  // Managed in MoveToPosition
+  hingePIDL->SetOutputRange(-1.0, 1.0);  //hingePIDL->SetSetpoint(0.0);  // Managed in MoveToPosition
   hingePIDR->SetInputRange(0.0, 1.0);
-  hingePIDR->SetOutputRange(0.0, 1.0);
-  //hingePIDR->SetSetpoint(0.0);  // Managed in MoveToPosition
+  hingePIDR->SetOutputRange(-1.0, 1.0);
 }
 
 void GamePieceManipulator::InitDefaultCommand() {
@@ -87,7 +83,7 @@ void GamePieceManipulator::HatchInject() {
 //v = velocity
 #define GP_DEADBAND 0.5
 void GamePieceManipulator::Move(double v) {
-    frc::SmartDashboard::PutNumber("Game Piece Set", v);
+ 
     double positionL = hingePotL->GetVoltage();
 
     if ((v > GP_DEADBAND && positionL > HINGE_MIN_LEFT)
@@ -111,7 +107,11 @@ void GamePieceManipulator::Move(double v) {
     }
 }
 
-void GamePieceManipulator::MoveTo(double v) {
+void GamePieceManipulator::MoveTo(double p) {
+  // PID takes a position in the range [0,1]
+  hingePIDL->SetSetpoint(p);
+  hingePIDR->SetSetpoint(p);
+  EnablePIDLoop();
 }
 
 void GamePieceManipulator::EnablePIDLoop() {
@@ -156,15 +156,11 @@ void HingePIDSource::SetPIDSourceType(frc::PIDSourceType pidSource) {
   // No-op (do not change from default)
 }
 
-HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor, double min, double range)
+HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor)
   : frc::PIDOutput() {
-  m_min = min;
-  m_range = range;
   m_motor = motor;
 }
 void HingePIDOutput::PIDWrite(double d) {
-  // Convert PID's [0,1] to [0.7,4.7]
-  double v = d * m_range + m_min;
   m_motor->Set(d);
 }
 

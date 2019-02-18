@@ -82,9 +82,7 @@ class HingePIDSource : public frc::PIDSource {
 
 class HingePIDOutput : public frc::PIDOutput {
   WPI_TalonSRX *m_motor;
-  double m_min;
-  double m_range;
  public:
-  HingePIDOutput(WPI_TalonSRX *motor, double min, double range);
+  HingePIDOutput(WPI_TalonSRX *motor);
   void PIDWrite(double d);
 };

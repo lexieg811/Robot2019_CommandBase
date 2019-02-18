@@ -17,7 +17,7 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
   hingeMotorL = new WPI_TalonSRX(6); // CAN ID
   hingeMotorR = new WPI_TalonSRX(7); // CAN ID
   hingeMotorL->EnableCurrentLimit(true);
-  hingeMotor->EnableCurrentLimit(true);
+  hingeMotorR->EnableCurrentLimit(true);
   hingePotL = new frc::AnalogInput(0);
   hingePotR = new frc::AnalogInput(1);
   hingePotL->SetOversampleBits(4);

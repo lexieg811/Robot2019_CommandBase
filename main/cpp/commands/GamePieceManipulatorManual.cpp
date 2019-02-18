@@ -4,6 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+
 #include "commands/GamePieceManipulatorManual.h"
 #include "subsystems/GamePieceManipulator.h"
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -25,7 +26,7 @@ void GamePieceManipulatorManual::Execute() {
   
   // Left trigger minus right trigger will provide input to move from range -1 to 1
   velocity = oi->m_XboxCoDriver->GetRawAxis(HINGE_LOWER_INPUT_AXIS) - oi->m_XboxCoDriver->GetRawAxis(HINGE_RAISE_INPUT_AXIS); 
-  frc::SmartDashboard::PutNumber("Game Piece Set Command", velocity);
+
   gamePieceManipulator->Move(velocity);
   // Display arm/hinge position on the dashboard
   frc::SmartDashboard::PutNumber("Left Hinge", gamePieceManipulator->GetLPosition());

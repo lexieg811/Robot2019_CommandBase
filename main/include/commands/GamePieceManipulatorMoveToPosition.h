@@ -11,6 +11,7 @@
 #include "CommandBase.h"
 
 class GamePieceManipulatorMoveToPosition : public CommandBase {
+  double m_setpoint;
  public:
   GamePieceManipulatorMoveToPosition();
   void Initialize() override;

@@ -57,6 +57,9 @@ class GamePieceManipulator : public frc::Subsystem {
   void HatchEject();
   void HatchInject();
   void Move(double); // manual arm raise/lower
+  void MoveTo(double); // move to position arm raise/lower
+  void EnablePIDLoop();
+  void DisablePIDLoop();
   void Stop();
   double GetLPosition();
   double GetRPosition();

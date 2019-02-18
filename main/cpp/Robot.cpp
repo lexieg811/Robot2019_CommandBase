@@ -102,7 +102,12 @@ void Robot::TeleopInit() {
   // This value should come from the sendable chooser/dashboard
   m_teleopCommand = new MecanumDriveCommand(false);
   m_teleopCommand->Start();
+#define noUSE_PID
+#ifdef USE_PID
+  m_gamePieceCommand = new GamePieceManipulatorMoveToPosition();
+#else // USE_PID
   m_gamePieceCommand = new GamePieceManipulatorManual();
+#endif // USE_PID
   m_gamePieceCommand->Start();
   m_habClimbCommand = new HABLift();
   m_habClimbCommand->Start();

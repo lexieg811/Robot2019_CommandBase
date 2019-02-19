@@ -50,16 +50,17 @@ void GamePieceManipulatorMoveToPosition::Execute() {
   else if (oi->m_XboxDriver->GetXButtonPressed()) {
     newSetpoint = degToLinear(posStow);
   }
-  else if (oi->m_XboxDriver->GetYButtonPressed()) {
-    newSetpoint = degToLinear(posHatchLoad);
-  }
-  else if (oi->m_XboxCoDriver->GetXButtonPressed()) {
-    newSetpoint = degToLinear(posDeliverRocket);
-  }
-  else if (oi->m_XboxCoDriver->GetYButtonPressed()) {
+  //else if (oi->m_XboxDriver->GetYButtonPressed()) {
+  //  newSetpoint = degToLinear(posHatchLoad);
+  //}
+  //else if (oi->m_XboxCoDriver->GetXButtonPressed()) {
+  //  newSetpoint = degToLinear(posDeliverRocket);
+  //}
+  else if (oi->m_XboxDriver->GetYButtonPressed()) { // was CoDriver
     newSetpoint = degToLinear(posGround);
   }
   if (newSetpoint != m_setpoint) {
+    printf("MoveToPosition");
     frc::SmartDashboard::PutNumber("Hatch Move to Position", newSetpoint);
     gamePieceManipulator->MoveTo(newSetpoint);
     m_setpoint = newSetpoint;

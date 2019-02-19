@@ -9,10 +9,10 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 // Move these to the appropriate location
-constexpr double hingeMaxLeft = 4.7;
-constexpr double hingeMinLeft = 0.7;
-constexpr double hingeMaxRight = 4.8;
-constexpr double hingeMinRight = 0.8;
+constexpr double hingeMaxLeft = 0.7; // was 4.3; measured on Armada
+constexpr double hingeMinLeft = 4.7; // was 0.3;
+constexpr double hingeMaxRight = 0.8; // was 4.3;
+constexpr double hingeMinRight = 4.8; // was 0.538;
 constexpr double hingeLeftKp = 1.0;
 constexpr double hingeLeftKi = 0.0;
 constexpr double hingeLeftKd = 0.0;
@@ -44,8 +44,10 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
     hingeMinLeft, hingeMaxLeft - hingeMinLeft);
   hingeInR = new HingePIDSource(hingePotR,
     hingeMinRight, hingeMaxRight - hingeMinRight);
-  hingeOutL = new HingePIDOutput(hingeMotorL);
-  hingeOutR = new HingePIDOutput(hingeMotorR);
+  hingeOutL = new HingePIDOutput(hingeMotorL, hingePotL,
+    hingeMinLeft, hingeMaxLeft - hingeMinLeft);
+  hingeOutR = new HingePIDOutput(hingeMotorR, hingePotR,
+    hingeMinRight, hingeMaxRight - hingeMinRight);
 
   hingePIDL = new frc::PIDController(hingeLeftKp, hingeLeftKi, hingeLeftKd,
     *hingeInL, *hingeOutL);
@@ -53,7 +55,7 @@ GamePieceManipulator::GamePieceManipulator() : frc::Subsystem("GamePieceManipula
     *hingeInR, *hingeOutR);
   
   hingePIDL->SetInputRange(0.0, 1.0);  // [120,0] (here::MoveTo) <- [0,1] (PID) <- [0.7,4.7] (here)
-  hingePIDL->SetOutputRange(-1.0, 1.0);  //hingePIDL->SetSetpoint(0.0);  // Managed in MoveToPosition
+  hingePIDL->SetOutputRange(-1.0, 1.0);  // velocity
   hingePIDR->SetInputRange(0.0, 1.0);
   hingePIDR->SetOutputRange(-1.0, 1.0);
 }
@@ -81,14 +83,14 @@ void GamePieceManipulator::HatchInject() {
     Arm Raise & Lower Methods
 ********************************/
 //v = velocity
-#define GP_DEADBAND 0.5
+#define GP_DEADBAND 0.25
 void GamePieceManipulator::Move(double v) {
  
     double positionL = hingePotL->GetVoltage();
 
     if ((v > GP_DEADBAND && positionL > HINGE_MIN_LEFT)
         || (v < -GP_DEADBAND && positionL < HINGE_MAX_LEFT)) {
-        v *= 10.0;
+        //v *= 10.0;
         hingeMotorL->Set(v);
     }
     else {
@@ -99,7 +101,7 @@ void GamePieceManipulator::Move(double v) {
 
     if ((v > GP_DEADBAND && positionR > HINGE_MIN_RIGHT)
         || (v < -GP_DEADBAND && positionR < HINGE_MAX_RIGHT)) {
-        v *= 10.0;
+        //v *= 10.0;
         hingeMotorR->Set(v*.91);
     }
     else {
@@ -148,7 +150,7 @@ HingePIDSource::HingePIDSource(frc::AnalogInput *pot, double min, double range)
 }
 double HingePIDSource::PIDGet() {
   double v = m_pot->GetVoltage();
-  // Scale [0.7,4.7] to [0, 1] for PID
+  // Scale [4.7,0.7] to [0, 1] for PID
   v = (v - m_min) / m_range;
   return v;
 }
@@ -156,12 +158,23 @@ void HingePIDSource::SetPIDSourceType(frc::PIDSourceType pidSource) {
   // No-op (do not change from default)
 }
 
-HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor)
+HingePIDOutput::HingePIDOutput(WPI_TalonSRX *motor, frc::AnalogInput *pot, 
+  double min, double range)
   : frc::PIDOutput() {
   m_motor = motor;
+  m_pot = pot;
+  m_min = min;
+  m_range = range;
 }
 void HingePIDOutput::PIDWrite(double d) {
-  m_motor->Set(d);
+  double v = m_pot->GetVoltage();
+  v = (v - m_min) / m_range;
+  if ((v < 0.0) || (v > 1.0)) {
+    m_motor->Set(0.0);
+  }
+  else {
+    m_motor->Set(d);
+  }
 }
 
 // ----------------------------------------------------------------------------

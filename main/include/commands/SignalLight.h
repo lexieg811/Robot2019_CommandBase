@@ -10,9 +10,9 @@
 #include <frc/commands/Command.h>
 #include "CommandBase.h"
 
-class HABRetractFront : public CommandBase {
+class SignalLight : public CommandBase {
  public:
-  HABRetractFront();
+  SignalLight();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

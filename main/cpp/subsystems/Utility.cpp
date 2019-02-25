@@ -7,11 +7,28 @@
 
 #include "subsystems/Utility.h"
 
-Utility::Utility() : Subsystem("ExampleSubsystem") {}
+Utility::Utility() : Subsystem("Utility") {
+  ballHatchLight = new frc::Relay(0);
+  cameraIlluminator = new frc::Relay(1);
+  cameraIlluminator->Set(frc::Relay::Value::kForward);
+}
 
 void Utility::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+}
+
+void Utility::SignalLightOn() {
+  ballHatchLight->Set(frc::Relay::Value::kOn);
+  cameraIlluminator->Set(frc::Relay::Value::kOff);
+}
+
+void Utility::SignalLightOff() {
+  ballHatchLight->Set(frc::Relay::Value::kOff);
+  cameraIlluminator->Set(frc::Relay::Value::kForward);
+}
+void Utility::CameraCapture() {
+
 }
 
 // Put methods for controlling this subsystem

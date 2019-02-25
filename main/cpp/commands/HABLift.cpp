@@ -6,24 +6,58 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/HABLift.h"
+#include "subsystems/HABClimber.h"
+#include "OI.h"
+
+#define DEADBAND .15
 
 HABLift::HABLift() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(habClimber);
 }
 
 // Called just before this Command runs the first time
 void HABLift::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void HABLift::Execute() {}
+void HABLift::Execute() {
+  // Front Lifter
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  if (-oi->m_XboxCoDriver->GetRawAxis(1) > DEADBAND) {
+    habClimber->LiftFront();
+  }
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  else if (-oi->m_XboxCoDriver->GetRawAxis(1) < -DEADBAND) {
+    habClimber->LowerFront();
+  }
+  else {
+     habClimber->StopFront();
+  }
+  // Rear Lifter
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  if (-oi->m_XboxCoDriver->GetRawAxis(5) > DEADBAND) {
+    habClimber->LiftRear();
+  }
+  // Negate input because FORWARD on Y-Axis IS NEGATIVE
+  else if (-oi->m_XboxCoDriver->GetRawAxis(5) < -DEADBAND) {
+    habClimber->LowerRear();
+  }
+  else {
+    habClimber->StopRear();
+  }
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool HABLift::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void HABLift::End() {}
+void HABLift::End() {
+  habClimber->Stop();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void HABLift::Interrupted() {}
+void HABLift::Interrupted() {
+  habClimber->Stop();
+}

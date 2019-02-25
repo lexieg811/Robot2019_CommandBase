@@ -8,10 +8,14 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class GamePieceManipulatorManual : public frc::Command {
+#define HINGE_RAISE_INPUT_AXIS 3  // Right Trigger
+#define HINGE_LOWER_INPUT_AXIS 2  // Left Trigger
+
+class GamePieceManipulatorManual : public CommandBase {
  public:
-  GamePieceManipulatorManual(double);
+  GamePieceManipulatorManual();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

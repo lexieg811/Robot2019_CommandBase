@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "CommandBase.h"
 
-class ExampleCommand : public frc::Command {
+class ExampleCommand : public CommandBase {
  public:
   ExampleCommand();
   void Initialize() override;

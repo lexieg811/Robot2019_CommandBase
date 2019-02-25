@@ -6,24 +6,73 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/MecanumDriveCommand.h"
+#include "OI.h"
 
-MecanumDriveCommand::MecanumDriveCommand() {
+MecanumDriveCommand::MecanumDriveCommand(bool g) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  // Requires mecanumDriveSystem();
+  useGyro = g;
 }
 
 // Called just before this Command runs the first time
 void MecanumDriveCommand::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void MecanumDriveCommand::Execute() {}
+void MecanumDriveCommand::Execute() {
+  if (useGyro) {
+    mecanumDriveSystem->Saucer(this->GetX(), this->GetInvertedY(), this->GetTwist());
+  }
+  else {
+    mecanumDriveSystem->Go(this->GetX(), this->GetInvertedY(), this->GetTwist());
+  }
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool MecanumDriveCommand::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void MecanumDriveCommand::End() {}
+void MecanumDriveCommand::End() {
+  mecanumDriveSystem->Stop();  
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MecanumDriveCommand::Interrupted() {}
+void MecanumDriveCommand::Interrupted() {
+  mecanumDriveSystem->Stop();
+}
+
+double MecanumDriveCommand::GetX()
+{
+	return Deadband(oi->m_XboxDriver->GetRawAxis(0)); // Left stick, X axis
+}
+double MecanumDriveCommand::GetY()
+{
+	return Deadband(oi->m_XboxDriver->GetRawAxis(1)); // Left Stick, Y axis
+}
+
+double MecanumDriveCommand::GetInvertedY()
+{
+	return -Deadband(oi->m_XboxDriver->GetRawAxis(1)); // Left Stick, Y axis, Inverted
+}
+
+double MecanumDriveCommand::GetTwist()
+{
+	return Deadband(oi->m_XboxDriver->GetRawAxis(4)); // Right stick, X axis
+}
+double MecanumDriveCommand::Deadband(double val)
+{
+  double newVal;
+  if (val > -DEADBAND && val < DEADBAND) {
+    return 0.0;
+  }
+  if (val != 0) {
+   newVal = pow(val, 2);
+  } 
+  if (val >= 0) {
+    return newVal;
+  }
+  else {
+    return -newVal;
+  }
+}
